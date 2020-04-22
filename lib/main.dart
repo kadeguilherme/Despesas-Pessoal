@@ -1,11 +1,14 @@
 import 'package:dispensa/models/transacao.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 main() => runApp(DespensasApp());
 
 class DespensasApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('pt_BR', null);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
@@ -24,7 +27,7 @@ class MyHomePage extends StatelessWidget {
     Transacao(
       id: "t2",
       title: "Conta de luz",
-      value: 211.33,
+      value: 211.0,
       date: DateTime.now(),
     )
   ];
@@ -64,7 +67,7 @@ class MyHomePage extends StatelessWidget {
                     ),
                     padding: EdgeInsets.all(10),
                     child: Text(
-                      tr.value.toString(),
+                      'R${tr.value.toStringAsFixed(2)}',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -82,7 +85,7 @@ class MyHomePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        tr.date.toString(),
+                        DateFormat('d MMM y (E)').format(tr.date),
                         style: TextStyle(
                           color: Colors.grey,
                         ),
