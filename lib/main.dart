@@ -17,6 +17,8 @@ class DespensasApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  final title = TextEditingController();
+  final value = TextEditingController();
   final _transacao = [
     Transacao(
       id: 't1',
@@ -38,8 +40,6 @@ class MyHomePage extends StatelessWidget {
         title: Text("Despesas Pessoais"),
       ),
       body: Column(
-        //espaço entre as colunas
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         //esticar a a linha
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -89,12 +89,44 @@ class MyHomePage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.grey,
                         ),
-                      )
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ));
             }).toList(),
+          ),
+          Card(
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    controller: title,
+                    decoration: InputDecoration(labelText: 'Titulo'),
+                  ),
+                  TextField(
+                    controller: value,
+                    decoration: InputDecoration(labelText: 'Valor R\$ '),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          print(title.text);
+                          print(value.text);
+                        },
+                        child: Text('Nova Transação'),
+                        textColor: Colors.purple[800],
+                        splashColor: Colors.purple[50],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
           )
         ],
       ),
