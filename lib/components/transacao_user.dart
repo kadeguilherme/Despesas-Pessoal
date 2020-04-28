@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:dispensa/components/transcao_lista.dart';
 import 'package:dispensa/components/transacao_form.dart';
 import '../models/transacao.dart';
@@ -23,12 +24,26 @@ class _TransacaoUserState extends State<TransacaoUser> {
       date: DateTime.now(),
     )
   ];
+
+  _addTransacao(String titulo, double valor) {
+    final newTransacao = Transacao(
+      id: Random().nextDouble().toString(),
+      title: titulo,
+      value: valor,
+      date: DateTime.now(),
+    );
+
+    setState(() {
+      _transacao.add(newTransacao);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         TransacaoLista(_transacao),
-        TranscaoForm(),
+        TransacaoForm(_addTransacao),
       ],
     );
   }

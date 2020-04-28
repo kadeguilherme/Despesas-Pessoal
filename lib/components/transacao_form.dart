@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TranscaoForm extends StatelessWidget {
-  final title = TextEditingController();
-  final value = TextEditingController();
+class TransacaoForm extends StatelessWidget {
+  final titleController = TextEditingController();
+  final valueController = TextEditingController();
+
+  final void Function(String, double) onSubmit;
+
+  TransacaoForm(this.onSubmit);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -12,11 +17,11 @@ class TranscaoForm extends StatelessWidget {
         child: Column(
           children: <Widget>[
             TextField(
-              controller: title,
+              controller: titleController,
               decoration: InputDecoration(labelText: 'Titulo'),
             ),
             TextField(
-              controller: value,
+              controller: valueController,
               decoration: InputDecoration(labelText: 'Valor R\$ '),
             ),
             Row(
@@ -24,8 +29,9 @@ class TranscaoForm extends StatelessWidget {
               children: <Widget>[
                 FlatButton(
                   onPressed: () {
-                    print(title.text);
-                    print(value.text);
+                    final title = titleController.text;
+                    final value = double.tryParse(valueController.text) ?? 0.0;
+                    onSubmit(title, value);
                   },
                   child: Text('Nova Transação'),
                   textColor: Colors.purple[800],
