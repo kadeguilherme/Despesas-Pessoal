@@ -1,7 +1,6 @@
 import 'package:dispensa/components/transacao_user.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:dispensa/components/transacao_user.dart';
 
 main() => runApp(DespensasApp());
 
@@ -22,6 +21,12 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Despesas Pessoais"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {},
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -39,6 +44,9 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton:
+          FloatingActionButton(child: Icon(Icons.add), onPressed: () {}),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
