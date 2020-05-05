@@ -1,4 +1,7 @@
-import 'package:dispensa/components/transacao_user.dart';
+import 'package:dispensa/components/transacao_form.dart';
+import 'package:dispensa/components/transcao_lista.dart';
+import 'dart:math';
+import 'package:dispensa/models/transacao.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -15,7 +18,42 @@ class DespensasApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final _tranactions = [
+    Transacao(
+        id: 't1',
+        title: 'Tenis de Corrida',
+        value: 310.76,
+        date: DateTime.now()),
+    Transacao(
+        id: 't2', title: 'Conta de Luz', value: 50.99, date: DateTime.now())
+  ];
+
+  _addTransacao(String title, double value) {
+    final newTransacao = Transacao(
+        id: Random().nextDouble().toString(),
+        title: title,
+        value: value,
+        date: DateTime.now());
+
+    setState(() {
+      _tranactions.add(newTransacao);
+    });
+  }
+
+  _openTranscationFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransacaoForm(null);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +61,8 @@ class MyHomePage extends StatelessWidget {
         title: Text("Despesas Pessoais"),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {},
-          )
+              icon: Icon(Icons.add),
+              onPressed: () => _openTranscationFormModal(context)),
         ],
       ),
       body: SingleChildScrollView(
@@ -40,12 +77,13 @@ class MyHomePage extends StatelessWidget {
                 child: Text("graficos"),
               ),
             ),
-            TransacaoUser(),
+            TransacaoLista(_tranactions)
           ],
         ),
       ),
-      floatingActionButton:
-          FloatingActionButton(child: Icon(Icons.add), onPressed: () {}),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () => _openTranscationFormModal(context)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
