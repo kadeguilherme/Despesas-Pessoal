@@ -13,6 +13,27 @@ class DespensasApp extends StatelessWidget {
     initializeDateFormatting('pt_BR', null);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        accentColor: Colors.deepPurple,
+        fontFamily: 'Quicksand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              title: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                title: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+        ),
+      ),
       home: MyHomePage(),
     );
   }
@@ -31,7 +52,11 @@ class _MyHomePageState extends State<MyHomePage> {
         value: 310.76,
         date: DateTime.now()),
     Transacao(
-        id: 't2', title: 'Conta de Luz', value: 50.99, date: DateTime.now())
+      id: 't2',
+      title: 'Conta de Luz',
+      value: 50.99,
+      date: DateTime.now(),
+    )
   ];
 
   _addTransacao(String title, double value) {
@@ -44,6 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _tranactions.add(newTransacao);
     });
+
+    Navigator.of(context).pop();
   }
 
   _openTranscationFormModal(BuildContext context) {
