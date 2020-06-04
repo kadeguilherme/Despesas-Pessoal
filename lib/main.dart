@@ -4,14 +4,12 @@ import 'package:dispensa/components/transcao_lista.dart';
 import 'dart:math';
 import 'package:dispensa/models/transacao.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 main() => runApp(DespensasApp());
 
 class DespensasApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('pt_BR', null);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
