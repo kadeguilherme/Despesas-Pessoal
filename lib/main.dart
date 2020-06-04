@@ -1,3 +1,4 @@
+import 'package:dispensa/components/chart.dart';
 import 'package:dispensa/components/transacao_form.dart';
 import 'package:dispensa/components/transcao_lista.dart';
 import 'dart:math';
@@ -18,7 +19,7 @@ class DespensasApp extends StatelessWidget {
         accentColor: Colors.deepPurple,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
+              headline6: TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -26,7 +27,7 @@ class DespensasApp extends StatelessWidget {
             ),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
-                title: TextStyle(
+                headline6: TextStyle(
                   fontFamily: 'OpenSans',
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -46,18 +47,32 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transacao> _tranactions = [
-    // Transacao(
-    //     id: 't1',
-    //     title: 'Tenis de Corrida',
-    //     value: 310.76,
-    //     date: DateTime.now()),
-    // Transacao(
-    //   id: 't2',
-    //   title: 'Conta de Luz',
-    //   value: 50.99,
-    //   date: DateTime.now(),
-    // )
+    Transacao(
+        id: 't1',
+        title: 'Tenis de Corrida',
+        value: 310.76,
+        date: DateTime.now().subtract(Duration(days: 4))),
+    Transacao(
+      id: 't2',
+      title: 'Conta de Luz',
+      value: 50.99,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transacao(
+      id: 't3',
+      title: 'Conta de Agua',
+      value: 30.00,
+      date: DateTime.now().subtract(Duration(days: 2)),
+    )
   ];
+
+  List<Transacao> get _recentTransactions {
+    return _tranactions.where((tr) {
+      return tr.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
+    }).toList();
+  }
 
   _addTransacao(String title, double value) {
     final newTransacao = Transacao(
@@ -97,13 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //esticar a a linha
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              color: Colors.blue,
-              child: Card(
-                elevation: 5,
-                child: Text("graficos"),
-              ),
-            ),
+            Chart(_recentTransactions),
             TransacaoLista(_tranactions)
           ],
         ),

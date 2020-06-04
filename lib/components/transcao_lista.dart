@@ -17,8 +17,8 @@ class TransacaoLista extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  "Nenhuma Transação Cadastrada",
-                  style: Theme.of(context).textTheme.title,
+                  "Nenhuma Transação Cadastradas",
+                  style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(
                   height: 20,
@@ -27,7 +27,6 @@ class TransacaoLista extends StatelessWidget {
                   height: 200,
                   child: Image.asset(
                     'assets/imagens/waiting.png',
-                    fit: BoxFit.cover,
                   ),
                 ),
               ],
