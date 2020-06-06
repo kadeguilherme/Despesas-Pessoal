@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransacaoForm extends StatefulWidget {
-  final void Function(String, double) onSubmit;
+  final void Function(String, double, DateTime) onSubmit;
 
   TransacaoForm(this.onSubmit);
 
@@ -13,16 +14,33 @@ class _TransacaoFormState extends State<TransacaoForm> {
   final titleController = TextEditingController();
 
   final valueController = TextEditingController();
-
+  DateTime _selectedDate = DateTime.now();
   _submitForm() {
-    final title = titleController.text;
-    final value = double.tryParse(valueController.text) ?? 0.0;
+    final _title = titleController.text;
+    final _value = double.tryParse(valueController.text) ?? 0.0;
 
-    if (title.isEmpty || value < 0) {
+    if (_title.isEmpty || _value < 0 || _selectedDate == null) {
       return 0;
     }
     //O widget acessa a função que recibida como paramentro
-    this.widget.onSubmit(title, value);
+    this.widget.onSubmit(_title, _value, _selectedDate);
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      //ShowDatePicker esperar uma future
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
   }
 
   @override
@@ -48,9 +66,15 @@ class _TransacaoFormState extends State<TransacaoForm> {
               height: 70,
               child: Row(
                 children: <Widget>[
-                  Text('Nenhuma data selecionada'),
+                  Expanded(
+                    child: Text(
+                      _selectedDate == null
+                          ? 'Nenhuma data selecionada'
+                          : 'Data Selecionada: ${DateFormat('dd/MM/y').format(_selectedDate)}',
+                    ),
+                  ),
                   FlatButton(
-                    onPressed: null,
+                    onPressed: _showDatePicker,
                     textColor: Theme.of(context).primaryColor,
                     child: Text(
                       'Selecionar Data',

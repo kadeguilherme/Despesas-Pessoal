@@ -50,7 +50,12 @@ class TransacaoLista extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     subtitle: Text(
-                      DateFormat('DD MMM y').format(tr.date),
+                      DateFormat('dd MMM y').format(tr.date),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () {},
                     ),
                   ),
                 );

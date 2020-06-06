@@ -49,23 +49,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transacao> _tranactions = [
-    Transacao(
-        id: 't1',
-        title: 'Tenis de Corrida',
-        value: 310.76,
-        date: DateTime.now().subtract(Duration(days: 4))),
-    Transacao(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 50.99,
-      date: DateTime.now().subtract(Duration(days: 3)),
-    ),
-    Transacao(
-      id: 't3',
-      title: 'Conta de Agua',
-      value: 30.00,
-      date: DateTime.now().subtract(Duration(days: 2)),
-    )
+    // Transacao(
+    //     id: 't1',
+    //     title: 'Tenis de Corrida',
+    //     value: 310.76,
+    //     date: DateTime.now().subtract(Duration(days: 4))),
+    // Transacao(
+    //   id: 't2',
+    //   title: 'Conta de Luz',
+    //   value: 50.99,
+    //   date: DateTime.now().subtract(Duration(days: 3)),
+    // ),
+    // Transacao(
+    //   id: 't3',
+    //   title: 'Conta de Agua',
+    //   value: 30.00,
+    //   date: DateTime.now().subtract(Duration(days: 2)),
+    // )
   ];
 
   List<Transacao> get _recentTransactions {
@@ -76,12 +76,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  _addTransacao(String title, double value) {
+  _addTransacao(String title, double value, DateTime data) {
     final newTransacao = Transacao(
-        id: Random().nextDouble().toString(),
-        title: title,
-        value: value,
-        date: DateTime.now());
+      id: Random().nextDouble().toString(),
+      title: title,
+      value: value,
+      date: data,
+    );
 
     setState(() {
       _tranactions.add(newTransacao);
