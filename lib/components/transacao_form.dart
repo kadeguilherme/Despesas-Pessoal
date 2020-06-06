@@ -44,6 +44,24 @@ class _TransacaoFormState extends State<TransacaoForm> {
               onSubmitted: (_) => _submitForm(),
               decoration: InputDecoration(labelText: 'Valor R\$ '),
             ),
+            Container(
+              height: 70,
+              child: Row(
+                children: <Widget>[
+                  Text('Nenhuma data selecionada'),
+                  FlatButton(
+                    onPressed: null,
+                    textColor: Theme.of(context).primaryColor,
+                    child: Text(
+                      'Selecionar Data',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -56,10 +74,11 @@ class _TransacaoFormState extends State<TransacaoForm> {
                   child: Text('Cancelar'),
                 ),
                 Spacer(),
-                FlatButton(
+                RaisedButton(
                   onPressed: _submitForm,
                   child: Text('Nova Transação'),
-                  textColor: Colors.purple[800],
+                  textColor: Theme.of(context).textTheme.button.color,
+                  color: Theme.of(context).primaryColor,
                   splashColor: Colors.purple[50],
                 ),
               ],
