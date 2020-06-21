@@ -115,6 +115,14 @@ class _MyHomePageState extends State<MyHomePage> {
     final appBar = AppBar(
       title: Text("Despesas Pessoais"),
       actions: <Widget>[
+        if (_isLadscape)
+          IconButton(
+              icon: Icon(_showChart ? Icons.list : Icons.show_chart),
+              onPressed: () {
+                setState(() {
+                  _showChart = !_showChart;
+                });
+              }),
         IconButton(
             icon: Icon(Icons.add),
             onPressed: () => _openTranscationFormModal(context)),
@@ -132,21 +140,6 @@ class _MyHomePageState extends State<MyHomePage> {
           //esticar a a linha
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            if (_isLadscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("Grafico"),
-                  Switch(
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
             if (_showChart || !_isLadscape)
               Container(
                 height: availableHeight * (!_isLadscape ? 0.4 : 0.6),
