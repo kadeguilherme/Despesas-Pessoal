@@ -68,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // )
   ];
   bool _showChart = false;
+
   List<Transacao> get _recentTransactions {
     return _tranactions.where((tr) {
       return tr.date.isAfter(DateTime.now().subtract(
@@ -107,6 +108,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool _isLadscape = MediaQuery.of(context).orientation ==
+        Orientation.landscape; //comparar se a orientação esta no paisagem
+
+    print(!(_isLadscape));
     final appBar = AppBar(
       title: Text("Despesas Pessoais"),
       actions: <Widget>[
@@ -127,32 +132,34 @@ class _MyHomePageState extends State<MyHomePage> {
           //esticar a a linha
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Grafico"),
-                Switch(
-                  value: _showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      _showChart = value;
-                    });
-                  },
-                ),
-              ],
-            ),
-            _showChart
-                ? Container(
-                    height: availableHeight * 0.4,
-                    child: Chart(_recentTransactions),
-                  )
-                : Container(
-                    height: availableHeight * 0.6,
-                    child: TransacaoLista(
-                      _tranactions,
-                      _deleteTransaction,
-                    ),
+            if (_isLadscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("Grafico"),
+                  Switch(
+                    value: _showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        _showChart = value;
+                      });
+                    },
                   ),
+                ],
+              ),
+            if (_showChart || !_isLadscape)
+              Container(
+                height: availableHeight * (!_isLadscape ? 0.4 : 0.6),
+                child: Chart(_recentTransactions),
+              ),
+            if (!_showChart || !_isLadscape)
+              Container(
+                height: availableHeight * 0.6,
+                child: TransacaoLista(
+                  _tranactions,
+                  _deleteTransaction,
+                ),
+              ),
           ],
         ),
       ),
