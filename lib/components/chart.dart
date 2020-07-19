@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/transacao.dart';
 import '../components/chart_bar.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class Chart extends StatelessWidget {
   final List<Transacao> recentTransaction;
@@ -24,8 +25,12 @@ class Chart extends StatelessWidget {
           totalSum += recentTransaction[i].value;
         }
       }
+
+      initializeDateFormatting();
+
       return {
-        'day': DateFormat.E().format(weekDay)[0],
+        'day': DateFormat('EEE', 'pt_BR').format(weekDay).toUpperCase()[0] +
+            DateFormat('EEE', 'pt_BR').format(weekDay).substring(1),
         'value': totalSum,
       };
     }).reversed.toList();
@@ -39,11 +44,10 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 6,
-      margin: EdgeInsets.all(20),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(5, 4, 5, 4),
+      child: Container(
+        color: Colors.grey[800],
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupedTransactions.map((tr) {

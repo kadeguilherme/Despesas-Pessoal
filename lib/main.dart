@@ -13,14 +13,14 @@ class DespensasApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.deepPurple,
+        brightness: Brightness.dark,
+        accentColor: Colors.pinkAccent[400],
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
                 fontFamily: 'OpenSans',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
               ),
               button: TextStyle(
                 color: Colors.white,
@@ -30,9 +30,8 @@ class DespensasApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: TextStyle(
-                  fontFamily: 'OpenSans',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Quicksand',
+                  fontSize: 27,
                 ),
               ),
         ),
@@ -48,25 +47,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transacao> _tranactions = [
-    // Transacao(
-    //     id: 't1',
-    //     title: 'Tenis de Corrida',
-    //     value: 310.76,
-    //     date: DateTime.now().subtract(Duration(days: 4))),
-    // Transacao(
-    //   id: 't2',
-    //   title: 'Conta de Luz',
-    //   value: 50.99,
-    //   date: DateTime.now().subtract(Duration(days: 3)),
-    // ),
-    // Transacao(
-    //   id: 't3',
-    //   title: 'Conta de Agua',
-    //   value: 30.00,
-    //   date: DateTime.now().subtract(Duration(days: 2)),
-    // )
-  ];
+  final List<Transacao> _tranactions = [];
   bool _showChart = false;
 
   List<Transacao> get _recentTransactions {
@@ -108,12 +89,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool _isLadscape = MediaQuery.of(context).orientation ==
+    final mediaquery = MediaQuery.of(context);
+    bool _isLadscape = mediaquery.orientation ==
         Orientation.landscape; //comparar se a orientação esta no paisagem
 
-    print(!(_isLadscape));
     final appBar = AppBar(
-      title: Text("Despesas Pessoais"),
+      title: Text(
+        "Despesas Pessoais",
+      ),
+      centerTitle: true,
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.topLeft,
+              colors: [
+                Color(0xFF323232),
+                Color(0xFF4B4453),
+              ]),
+        ),
+      ),
       actions: <Widget>[
         if (_isLadscape)
           IconButton(
@@ -123,15 +118,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   _showChart = !_showChart;
                 });
               }),
-        IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _openTranscationFormModal(context)),
       ],
     );
 
-    final availableHeight = MediaQuery.of(context).size.height -
+    final availableHeight = mediaquery.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+        mediaquery.padding.top;
 
     return Scaffold(
       appBar: appBar,
@@ -142,7 +134,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             if (_showChart || !_isLadscape)
               Container(
-                height: availableHeight * (!_isLadscape ? 0.4 : 0.6),
+                height: availableHeight * (!_isLadscape ? 0.3 : 0.6),
+                //color: Colors.black,
                 child: Chart(_recentTransactions),
               ),
             if (!_showChart || !_isLadscape)
@@ -157,9 +150,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+          isExtended: true,
           child: Icon(Icons.add),
           onPressed: () => _openTranscationFormModal(context)),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
